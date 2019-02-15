@@ -1,6 +1,7 @@
 #include <SD.h>
 #include <DHT.h>    // importa la Librerias DHT
 #include <DHT_U.h>
+#include <EEPROM.h>
 
 File logFile;
 boolean saver;
@@ -38,10 +39,10 @@ void loop(){
   Vvalue = analogRead(Vpin)*(0.0244); //V=l*(Vomax/Vimax)
   Iread = analogRead(Ipin)*(5.0 / 1023.0);
   Ivalue=(Iread-2.5)/Sensibilidad;
-  delay(500);
+  delay(200);
   
-  Serial.print("SD value ");
-  Serial.println(SD.begin(9));
+  //Serial.print("SD value ");
+  //Serial.println(SD.begin(9));
   // Abrir archivo y escribir valor
   logFile = SD.open("datalog.txt", FILE_WRITE);
   
