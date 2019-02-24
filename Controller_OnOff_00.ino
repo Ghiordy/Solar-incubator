@@ -14,7 +14,7 @@ float DT;
 
 //Statistics variables
 int n = 10;
-int ts = 500;
+int ts = 100;
 float Pred;
 int aj = 60;
 
@@ -23,7 +23,7 @@ void setup() {
 }
 
 void loop() {
-  Pred = 0;
+  //Pred = 0;
   DT = 0;
   // Muestreo promedio
   for (int i=0; i<n; i++){
@@ -32,12 +32,14 @@ void loop() {
     DT = DT + TEMPERATURA;
     delay(ts);
   }
-  DT = DT / (n*ts) ;
+  DT = DT / n ;
+  DT = TEMPERATURA - Pred;
   // Getting humidity value
   HUMEDAD = dht.readHumidity();
-  Pred = 60;
+  Pred = aj*DT + TEMPERATURA;
   if(Pred < 37.5){
     digitalWrite(RELE,HIGH);
   }
   else{digitalWrite(RELE,LOW);}
+  Pred = TEMPERATURA;
 }
