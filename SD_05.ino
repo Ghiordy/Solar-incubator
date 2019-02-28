@@ -47,7 +47,9 @@ void setup(){
   digitalWrite(powDHTe,HIGH);
   pinMode(gndDHTe,OUTPUT);
   digitalWrite(gndDHTe,LOW);
-  pinMode(SENSOR_e,INPUT);
+  dhti.begin();
+  dhte.begin();
+  //pinMode(SENSOR_e,INPUT);
   if (digitalRead(reboot)==1){
     rebooting();}
   setupLogging();
@@ -59,8 +61,6 @@ void setupLogging(){
   //Serial.println(login);
   file = file + login + ext;
   Serial.println(file);
-  dhti.begin();
-  dhte.begin();
   Serial.print(F("Iniciando SD ..."));
   if (!SD.begin(9)){
     Serial.println(F("Error al iniciar"));
@@ -100,7 +100,8 @@ void loop(){
       logFile = SD.open(file, FILE_WRITE);
       if (logFile) { 
         printer();
-      }}}}
+      }
+      else{printerSerial();}}}}
 
 void printer(){
   if(digitalRead(enable)==0){
@@ -148,6 +149,23 @@ void printer(){
     Serial.println(Ivalue); 
     logFile.close();
     }
+  }
+
+void printerSerial(){
+    Serial.println("Not saving");
+    Serial.print(millis());
+    Serial.print(",");
+    Serial.print(TEMPERATURA_i);
+    Serial.print(",");
+    Serial.print(HUMEDAD_i);
+    Serial.print(",");
+    Serial.print(TEMPERATURA_e);
+    Serial.print(",");
+    Serial.print(HUMEDAD_e);
+    Serial.print(",");
+    Serial.print(Vvalue);
+    Serial.print(",");
+    Serial.println(Ivalue); 
   }
 
 
