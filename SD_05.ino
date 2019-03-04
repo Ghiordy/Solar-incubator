@@ -56,10 +56,10 @@ void setup(){
 }
 
 void setupLogging(){
-  login = EEPROM.read(address) + 1;
-  EEPROM.write(address,login);
+  login = EEPROM.read(address);
+  EEPROM.write(address,login+1);
   //Serial.println(login);
-  file = file + login + ext;
+  file = login + ext;
   Serial.println(file);
   Serial.print(F("Iniciando SD ..."));
   if (!SD.begin(9)){
