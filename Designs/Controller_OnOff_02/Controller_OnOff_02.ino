@@ -10,6 +10,10 @@ float TEMPERATURA;
 float HUMEDAD;
 DHT dht(SENSOR, DHT22);
 
+// Parameters
+float fixed = 37.5;
+float uncertain = 0.01;
+
 //DT
 float DT;
 
@@ -65,10 +69,10 @@ void loop() {
   Serial.println(Pred);
   //Serial.print(",");
   lcd.print(" P:"+String(Pred));
-  if(Pred < 37.00 & DT<0){
+  if(Pred < fixed*(1-uncertain) & DT<0){
     digitalWrite(RELE,LOW);
   }
-  if(Pred > 37.50 & DT>0){
+  if(Pred > fixed*(1+uncertain) & DT>0){
     digitalWrite(RELE,HIGH);
     }
   Pred = TEMPERATURA;
